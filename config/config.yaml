@@ -1,0 +1,23 @@
+Server:
+  RunMode: debug
+  HTTPPost: 3000
+  ReadTimeout: 60
+  WriteTimeout: 60
+App:
+  LogSavePath: storage/log
+  LogFileName: app
+  LogFileExt: .log
+JWT:
+  Secret: chandaye666
+  Issuer: chendaye
+  Expire: 7200000000000000
+Database:
+  DBType: mysql
+  Username: root
+  Password: mima
+  Host: 127.0.0.1:3306
+  DBName: 6666shujuk
+  Charset: utf8
+  ParseTime: True
+  MaxIdleConns: 10
+  MaxOpenConns: 30
