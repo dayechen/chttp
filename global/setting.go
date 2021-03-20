@@ -1,8 +1,8 @@
 package global
 
 import (
-	"chttp/pkg/logger"
-	"chttp/pkg/setting"
+	"cweb/pkg/logger"
+	"cweb/pkg/setting"
 )
 
 var (

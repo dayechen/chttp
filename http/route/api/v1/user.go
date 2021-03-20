@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"chttp/http/service"
-	"chttp/pkg/app"
-	errcode "chttp/pkg/error"
+	"cweb/http/service"
+	"cweb/pkg/app"
+	errcode "cweb/pkg/error"
 
 	"github.com/gin-gonic/gin"
 )

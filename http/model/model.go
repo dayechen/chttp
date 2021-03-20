@@ -1,8 +1,8 @@
 package model
 
 import (
-	"chttp/global"
-	"chttp/pkg/setting"
+	"cweb/global"
+	"cweb/pkg/setting"
 	"fmt"
 	"time"
 

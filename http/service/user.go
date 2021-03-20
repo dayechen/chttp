@@ -1,9 +1,9 @@
 package service
 
 import (
-	"chttp/global"
-	"chttp/http/model"
 	"crypto/md5"
+	"cweb/global"
+	"cweb/http/model"
 	"encoding/hex"
 )
 

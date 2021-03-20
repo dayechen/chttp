@@ -1,11 +1,11 @@
 package main
 
 import (
-	"chttp/global"
-	"chttp/http/model"
-	router "chttp/http/route"
-	"chttp/pkg/logger"
-	"chttp/pkg/setting"
+	"cweb/global"
+	"cweb/http/model"
+	router "cweb/http/route"
+	"cweb/pkg/logger"
+	"cweb/pkg/setting"
 	"fmt"
 	"log"
 	"net/http"

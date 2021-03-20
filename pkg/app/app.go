@@ -1,7 +1,7 @@
 package app
 
 import (
-	errcode "chttp/pkg/error"
+	errcode "cweb/pkg/error"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

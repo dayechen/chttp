@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"chttp/pkg/app"
-	errcode "chttp/pkg/error"
+	"cweb/pkg/app"
+	errcode "cweb/pkg/error"
 
 	"github.com/gin-gonic/gin"
 )

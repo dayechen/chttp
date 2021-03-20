@@ -1,8 +1,8 @@
 package router
 
 import (
-	"chttp/http/middleware"
-	v1 "chttp/http/route/api/v1"
+	"cweb/http/middleware"
+	v1 "cweb/http/route/api/v1"
 
 	"github.com/gin-gonic/gin"
 )
