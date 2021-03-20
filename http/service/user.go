@@ -1,10 +1,10 @@
 package service
 
 import (
+	"chttp/global"
+	"chttp/http/model"
 	"crypto/md5"
 	"encoding/hex"
-	"gobase/global"
-	"gobase/http/model"
 )
 
 // CreateUserRequest 创建用户请求

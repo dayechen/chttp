@@ -1,9 +1,9 @@
 package model
 
 import (
+	"chttp/global"
+	"chttp/pkg/setting"
 	"fmt"
-	"gobase/global"
-	"gobase/pkg/setting"
 	"time"
 
 	"github.com/jinzhu/gorm"

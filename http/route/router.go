@@ -1,8 +1,8 @@
 package router
 
 import (
-	"gobase/http/middleware"
-	v1 "gobase/http/route/api/v1"
+	"chttp/http/middleware"
+	v1 "chttp/http/route/api/v1"
 
 	"github.com/gin-gonic/gin"
 )

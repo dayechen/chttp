@@ -1,12 +1,12 @@
 package main
 
 import (
+	"chttp/global"
+	"chttp/http/model"
+	router "chttp/http/route"
+	"chttp/pkg/logger"
+	"chttp/pkg/setting"
 	"fmt"
-	"gobase/global"
-	"gobase/http/model"
-	router "gobase/http/route"
-	"gobase/pkg/logger"
-	"gobase/pkg/setting"
 	"log"
 	"net/http"
 	"time"

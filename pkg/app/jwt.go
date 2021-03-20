@@ -1,7 +1,7 @@
 package app
 
 import (
-	"gobase/global"
+	"chttp/global"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"

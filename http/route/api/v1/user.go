@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"gobase/http/service"
-	"gobase/pkg/app"
-	errcode "gobase/pkg/error"
+	"chttp/http/service"
+	"chttp/pkg/app"
+	errcode "chttp/pkg/error"
 
 	"github.com/gin-gonic/gin"
 )

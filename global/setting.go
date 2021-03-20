@@ -1,8 +1,8 @@
 package global
 
 import (
-	"gobase/pkg/logger"
-	"gobase/pkg/setting"
+	"chttp/pkg/logger"
+	"chttp/pkg/setting"
 )
 
 var (

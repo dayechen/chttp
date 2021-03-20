@@ -1,4 +1,4 @@
-module gobase
+module chttp
 
 go 1.14
 

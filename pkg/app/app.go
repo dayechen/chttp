@@ -1,7 +1,7 @@
 package app
 
 import (
-	errcode "gobase/pkg/error"
+	errcode "chttp/pkg/error"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
