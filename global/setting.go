@@ -1,7 +1,6 @@
 package global
 
 import (
-	"cweb/pkg/logger"
 	"cweb/pkg/setting"
 )
 
@@ -15,5 +14,5 @@ var (
 	// DatabaseSetting 数据库配置文件
 	DatabaseSetting *setting.DatabaseSetting
 	// Logger 日志文件
-	Logger *logger.Logger
+	// Logger *logger.Logger
 )

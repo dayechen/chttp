@@ -3,7 +3,6 @@ package v1
 import (
 	"cweb/http/service"
 	"cweb/pkg/app"
-	errcode "cweb/pkg/error"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,7 +19,7 @@ func NewUser() User {
 func (u User) List(c *gin.Context) {
 	uid := c.MustGet("uid").(int)
 	response := app.NewResponse(c)
-	response.ToResponse(gin.H{
+	response.ToSuccess(gin.H{
 		"msg": uid,
 	})
 }
@@ -29,22 +28,25 @@ func (u User) List(c *gin.Context) {
 func (u User) Register(c *gin.Context) {
 	response := app.NewResponse(c)
 	param := service.CreateUserRequest{}
+
+	// response.ToSuccess("艹")
+	// return
 	if err := app.BindAndValid(c, &param); err != nil {
-		response.ToErrorResponse(errcode.NewError(1, err.Error()))
+		response.ToError(err.Error())
 		return
 	}
 	svc := service.New(c.Request.Context())
 	uid, err := svc.CreateUser(&param)
 	if err != nil {
-		response.ToErrorResponse(errcode.NewError(1, "当前手机号已经注册"))
+		response.ToError("当前手机号已注册")
 		return
 	}
 	token, err := app.GenerateToken(uid)
 	if err != nil {
-		response.ToErrorResponse(errcode.NewError(1, err.Error()))
+		response.ToError("错误")
 		return
 	}
-	response.ToResponse(gin.H{
+	response.ToSuccess(gin.H{
 		"access_token": token,
 	})
 }

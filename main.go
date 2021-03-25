@@ -4,15 +4,12 @@ import (
 	"cweb/global"
 	"cweb/http/model"
 	router "cweb/http/route"
-	"cweb/pkg/logger"
 	"cweb/pkg/setting"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 func init() {
@@ -80,12 +77,12 @@ func setupDBEngine() error {
 
 // 初始化日志
 func setupLogger() error {
-	fileName := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
-	global.Logger = logger.NewLogger(&lumberjack.Logger{
-		Filename:  fileName,
-		MaxSize:   600,
-		MaxAge:    10,
-		LocalTime: true,
-	}, "", log.LstdFlags).WithCaller(2)
+	// fileName := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
+	// global.Logger = logger.NewLogger(&lumberjack.Logger{
+	// 	Filename:  fileName,
+	// 	MaxSize:   600,
+	// 	MaxAge:    10,
+	// 	LocalTime: true,
+	// }, "", log.LstdFlags).WithCaller(2)
 	return nil
 }

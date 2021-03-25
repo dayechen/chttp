@@ -1,7 +1,6 @@
 package app
 
 import (
-	errcode "cweb/pkg/error"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,15 +19,24 @@ func NewResponse(ctx *gin.Context) *Response {
 }
 
 // ToResponse 返回响应
-func (r *Response) ToResponse(data interface{}) {
+func (r *Response) ToSuccess(data interface{}) {
 	if data == nil {
 		data = gin.H{}
 	}
-	r.Ctx.JSON(http.StatusOK, data)
+	result := gin.H{
+		"code":    0,
+		"message": "success",
+		"data":    data,
+	}
+	r.Ctx.JSON(http.StatusOK, result)
 }
 
-// ToErrorResponse 返回错误的响应
-func (r *Response) ToErrorResponse(err *errcode.Error) {
-	response := gin.H{"code": err.Code(), "msg": err.Msg()}
-	r.Ctx.JSON(http.StatusOK, response)
+// ToError 返回错误的响应
+func (r *Response) ToError(data interface{}) {
+	result := gin.H{
+		"code":    1,
+		"message": "error",
+		"data":    data,
+	}
+	r.Ctx.JSON(http.StatusOK, result)
 }
