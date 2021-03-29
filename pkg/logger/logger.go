@@ -7,9 +7,9 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type Logger struct{}
+type Engine struct{}
 
-func NewLogger(path string, l string) (*Logger, error) {
+func NewLogger(path string, l string) (*Engine, error) {
 	log.SetReportCaller(true)
 	str, _ := os.Getwd()
 	path = str + "/" + path
@@ -27,19 +27,18 @@ func NewLogger(path string, l string) (*Logger, error) {
 	}
 	log.SetLevel(level[l])
 	log.SetOutput(io.MultiWriter(logFile))
-	log.Info("日志初始化成功")
-	return &Logger{}, nil
+	return &Engine{}, nil
 }
 
-func (l *Logger) Debug(args ...interface{}) {
+func (l *Engine) Debug(args ...interface{}) {
 	log.Debug(args...)
 }
-func (l *Logger) Info(args ...interface{}) {
+func (l *Engine) Info(args ...interface{}) {
 	log.Info(args...)
 }
-func (l *Logger) Warn(args ...interface{}) {
+func (l *Engine) Warn(args ...interface{}) {
 	log.Warn(args...)
 }
-func (l *Logger) Error(args ...interface{}) {
+func (l *Engine) Error(args ...interface{}) {
 	log.Error(args...)
 }

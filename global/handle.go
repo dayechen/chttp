@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	Socket *logic.Engine // socket
-	DB     *gorm.DB      // 数据库
-	Log    *logger.Logger
+	Socket *logic.Engine  // socket
+	DB     *gorm.DB       // 数据库
+	Log    *logger.Engine // 日志
 )

@@ -4,13 +4,13 @@ Server:
   ReadTimeout: 60
   WriteTimeout: 60
 Socket: 
-  Active: true
+  Active: false
   Url: /ws
 App:
   LogSavePath: storage/log
   LogFileName: app
   LogFileExt: .log
-  LogLevel: warn
+  LogLevel: debug
 JWT:
   Secret: chandaye666
   Issuer: 陈大爷
