@@ -91,6 +91,11 @@ func (b *broadcaster) SendMsgByFilter(event string, callback func(user *User) in
 	}
 }
 
+// 通过id获取登录的用户
+func (b *broadcaster) GetUserByID(UID int) *User {
+	return b.users[UID]
+}
+
 // UserEntering 用户进入
 func (b *broadcaster) UserEntering(u *User) {
 	b.enteringChannel <- u
@@ -106,18 +111,18 @@ func (b *broadcaster) Start() {
 	for {
 		select {
 		case user := <-b.enteringChannel:
-			if user.UID == 0 {
+			if user.ID == 0 {
 				b.nextTouristID++
 				user.TouristID = b.nextTouristID
 				b.tourists[user.TouristID] = user
 			} else {
-				b.users[user.UID] = user
+				b.users[user.ID] = user
 			}
 		case user := <-b.leavingChannel:
-			if user.UID == 0 {
+			if user.ID == 0 {
 				delete(b.tourists, user.TouristID)
 			} else {
-				delete(b.users, user.UID)
+				delete(b.users, user.ID)
 			}
 			user.CloseMessageChannel()
 		}

@@ -68,7 +68,7 @@ func setupSetting() error {
 // 初始化数据库
 func setupDBEngine() error {
 	var err error
-	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
+	global.DB, err = model.NewDBEngine(global.DatabaseSetting)
 	if err != nil {
 		return err
 	}

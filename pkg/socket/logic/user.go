@@ -9,11 +9,12 @@ import (
 )
 
 // NewUser 返回用户实例
-func NewUser(conn *websocket.Conn, UID int) *User {
+func NewUser(conn *websocket.Conn, ID int, Info map[string]interface{}) *User {
 	return &User{
 		conn:           conn,
-		UID:            UID,
+		ID:             ID,
 		close:          false,
+		Info:           Info,
 		MessageChannel: make(chan *Message),
 	}
 }

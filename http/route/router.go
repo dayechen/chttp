@@ -4,7 +4,7 @@ import (
 	"cweb/global"
 	"cweb/http/middleware"
 	v1 "cweb/http/route/api/v1"
-	"cweb/http/route/socket"
+	"cweb/socket"
 
 	"github.com/gin-gonic/gin"
 )

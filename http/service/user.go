@@ -23,7 +23,7 @@ func (svc *Service) CreateUser(param *CreateUserRequest) (int, error) {
 		Password: encryption(param.Passowrd),
 		Avatar:   param.Avatar,
 	}
-	return user.Create(global.DBEngine)
+	return user.Create(global.DB)
 }
 
 // 加盐加密

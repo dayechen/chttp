@@ -8,12 +8,13 @@ import (
 
 // User 用户结构体
 type User struct {
-	UID            int           `json:"uid"` // 用户id
-	TouristID      int           // 游客id
-	MessageChannel chan *Message `json:"-"` // 消息通道
-	close          bool          // 关闭连接
+	ID             int                    `json:"uid"` // 用户id
+	TouristID      int                    // 游客id
+	MessageChannel chan *Message          `json:"-"` // 消息通道
+	close          bool                   // 关闭连接
+	Info           map[string]interface{} // 用户的详情信息
 
-	conn *websocket.Conn
+	conn *websocket.Conn // 消息通道
 }
 
 // Message 给用户发送的消息
@@ -60,4 +61,10 @@ type Engine struct {
 	WebSocketHandle   WebSocketHandleFunc
 	CloseConnById     CloseConnByIdFunc
 	CloseConnByFilter CloseConnByFilterFunc
+}
+
+type LoginData struct {
+	Ok   bool                   // 是否允许登录
+	ID   int                    // 用户ID
+	Info map[string]interface{} // 用户携带的信息
 }
