@@ -38,5 +38,15 @@ func (r *Response) ToError(data interface{}) {
 		"message": "error",
 		"data":    data,
 	}
-	r.Ctx.JSON(http.StatusOK, result)
+	r.Ctx.JSON(http.StatusBadRequest, result)
+}
+
+// 返回分页
+func (r *Response) ToList() {
+
+}
+
+// ToMessage 返回需要弹出的消息
+func (r *Response) ToMessage() {
+
 }
