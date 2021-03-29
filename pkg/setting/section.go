@@ -15,6 +15,7 @@ type AppSetting struct {
 	LogSavePath string
 	LogFileName string
 	LogFileExt  string
+	LogLevel    string
 }
 
 // JWTSetting jwt 的项目配置
@@ -22,6 +23,7 @@ type JWTSetting struct {
 	Secret string
 	Issuer string
 	Expire time.Duration
+	Salt   string
 }
 
 // DatabaseSetting 数据库设置
@@ -35,6 +37,11 @@ type DatabaseSetting struct {
 	ParseTime    bool
 	MaxIdleConns int
 	MaxOpenConns int
+}
+
+type SocketSetting struct {
+	Active bool
+	Url    string
 }
 
 // ReadSection 读取配置文件

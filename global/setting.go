@@ -13,6 +13,7 @@ var (
 	JWTSetting *setting.JWTSetting
 	// DatabaseSetting 数据库配置文件
 	DatabaseSetting *setting.DatabaseSetting
-	// Logger 日志文件
-	// Logger *logger.Logger
+	// SocketSetting socket配置
+	SocketSetting *setting.SocketSetting
+	// Logger 日志配置
 )

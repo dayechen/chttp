@@ -3,14 +3,19 @@ Server:
   HTTPPost: 3000
   ReadTimeout: 60
   WriteTimeout: 60
+Socket: 
+  Active: true
+  Url: /ws
 App:
   LogSavePath: storage/log
   LogFileName: app
   LogFileExt: .log
+  LogLevel: warn
 JWT:
   Secret: chandaye666
-  Issuer: chendaye
+  Issuer: 陈大爷
   Expire: 7200000000000000
+  Salt: yanyanyan
 Database:
   DBType: mysql
   Username: root

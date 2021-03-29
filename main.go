@@ -4,6 +4,7 @@ import (
 	"cweb/global"
 	"cweb/http/model"
 	router "cweb/http/route"
+	"cweb/pkg/logger"
 	"cweb/pkg/setting"
 	"fmt"
 	"net/http"
@@ -27,11 +28,11 @@ func init() {
 func main() {
 	router := router.NewRouter()
 	s := &http.Server{
-		Addr:           ":" + global.ServerSetting.HTTPPost,
-		Handler:        router,
-		ReadTimeout:    global.ServerSetting.ReadTimeout,
-		WriteTimeout:   global.ServerSetting.WriteTimeout,
-		MaxHeaderBytes: 1 << 20,
+		Addr:         ":" + global.ServerSetting.HTTPPost,
+		Handler:      router,
+		ReadTimeout:  global.ServerSetting.ReadTimeout,
+		WriteTimeout: global.ServerSetting.WriteTimeout,
+		// MaxHeaderBytes: 1 << 20,
 	}
 	s.ListenAndServe()
 }
@@ -53,13 +54,16 @@ func setupSetting() error {
 		return err
 	}
 	// JWT的信息
-	err = setting.ReadSection("JWT", &global.JWTSetting)
-	if err != nil {
+	if err = setting.ReadSection("JWT", &global.JWTSetting); err != nil {
 		return err
 	}
 	global.JWTSetting.Expire *= time.Second
 	// 数据库配置
 	if err = setting.ReadSection("Database", &global.DatabaseSetting); err != nil {
+		return err
+	}
+	// websocket配置
+	if err = setting.ReadSection("Socket", &global.SocketSetting); err != nil {
 		return err
 	}
 	return nil
@@ -77,12 +81,11 @@ func setupDBEngine() error {
 
 // 初始化日志
 func setupLogger() error {
-	// fileName := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
-	// global.Logger = logger.NewLogger(&lumberjack.Logger{
-	// 	Filename:  fileName,
-	// 	MaxSize:   600,
-	// 	MaxAge:    10,
-	// 	LocalTime: true,
-	// }, "", log.LstdFlags).WithCaller(2)
+	var err error
+	path := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
+	global.Log, err = logger.NewLogger(path, global.AppSetting.LogLevel)
+	if err != nil {
+		return err
+	}
 	return nil
 }

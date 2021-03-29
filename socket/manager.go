@@ -30,11 +30,8 @@ func registerCallback() *server.Callback {
 			}
 		},
 		Leaving: func(user *logic.User) {
-			println("用户离开了", user.ID)
-			// system.ClearUser(uid)
 		},
 		RepeatLogin: func(oldUser, newUser *logic.User) bool {
-			println("重复登录了")
 			return true
 		},
 	}

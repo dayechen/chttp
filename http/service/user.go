@@ -28,7 +28,7 @@ func (svc *Service) CreateUser(param *CreateUserRequest) (int, error) {
 
 // 加盐加密
 func encryption(pas string) string {
-	salt := "陈大爷666"
+	salt := global.JWTSetting.Salt
 	m5 := md5.New()
 	m5.Write([]byte(pas))
 	m5.Write([]byte(string(salt)))

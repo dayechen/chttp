@@ -27,6 +27,5 @@ func JWT() gin.HandlerFunc {
 		}
 		c.Set("uid", claims.UID)
 		c.Next()
-		return
 	}
 }

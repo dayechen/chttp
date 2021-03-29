@@ -16,7 +16,9 @@ func NewRouter() *gin.Engine {
 	r.Use(middleware.Cors())
 	r.POST("/verify", user.Register)
 	// 注册socket路由
-	global.Socket = socket.NewSocket("/ws", r)
+	if global.SocketSetting.Active {
+		global.Socket = socket.NewSocket(global.SocketSetting.Url, r)
+	}
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(middleware.JWT())
 	{
