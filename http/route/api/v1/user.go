@@ -28,9 +28,6 @@ func (u User) List(c *gin.Context) {
 func (u User) Register(c *gin.Context) {
 	response := app.NewResponse(c)
 	param := service.CreateUserRequest{}
-
-	// response.ToSuccess("艹")
-	// return
 	if err := app.BindAndValid(c, &param); err != nil {
 		response.ToError(err.Error())
 		return
