@@ -24,6 +24,8 @@ func NewLogger(path string, l string) (*Engine, error) {
 		"info":  log.InfoLevel,
 		"warn":  log.WarnLevel,
 		"error": log.ErrorLevel,
+		"fatal": log.FatalLevel,
+		"panic": log.PanicLevel,
 	}
 	log.SetLevel(level[l])
 	log.SetOutput(io.MultiWriter(logFile))
