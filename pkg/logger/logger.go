@@ -15,7 +15,7 @@ func NewLogger(path string, l string) (*Engine, error) {
 	path = str + "/" + path
 	var logFile *os.File
 	var err error
-	logFile, err = os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModeAppend)
+	logFile, err = os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModeAppend)
 	if err != nil {
 		return nil, err
 	}
@@ -29,6 +29,7 @@ func NewLogger(path string, l string) (*Engine, error) {
 	}
 	log.SetLevel(level[l])
 	log.SetOutput(io.MultiWriter(logFile))
+	log.Debug("草")
 	return &Engine{}, nil
 }
 
