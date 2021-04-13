@@ -15,5 +15,6 @@ var (
 	DatabaseSetting *setting.DatabaseSetting
 	// SocketSetting socket配置
 	SocketSetting *setting.SocketSetting
-	// Logger 日志配置
+	// RedisSetting redis设置
+	RedisSetting *setting.RedisSetting
 )

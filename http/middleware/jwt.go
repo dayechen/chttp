@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"cweb/pkg/app"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,17 +12,13 @@ func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header.Get("Authorization")
 		if token == "" {
-			app.NewResponse(c).ToError(gin.H{
-				"reason": "用户未登录",
-			})
+			app.NewResponse(c).ToErrorCode(http.StatusUnauthorized)
 			c.Abort()
 			return
 		}
 		claims, err := app.ParseToken(token[7:])
 		if err != nil {
-			app.NewResponse(c).ToError(gin.H{
-				"reason": "登录过期",
-			})
+			app.NewResponse(c).ToErrorCode(http.StatusUnauthorized)
 			c.Abort()
 			return
 		}

@@ -14,15 +14,19 @@ App:
 JWT:
   Secret: chandaye666
   Issuer: 陈大爷
-  Expire: 7200000000000000
+  Expire: 720000000
   Salt: yanyanyan
 Database:
   DBType: mysql
   Username: root
-  Password: mima
+  Password: root
   Host: 127.0.0.1:3306
-  DBName: 6666shujuk
+  DBName: treasure
   Charset: utf8
   ParseTime: True
   MaxIdleConns: 10
   MaxOpenConns: 30
+Redis: 
+  Host: 127.0.0.1:6379
+  Password: ""
+  DBNumber: 15

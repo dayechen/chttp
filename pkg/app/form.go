@@ -30,12 +30,12 @@ func BindAndValid(c *gin.Context, v interface{}) error {
 		fmt.Println(err)
 	}
 	// 注册自定义验证方法
-	_ = validate.RegisterValidation("isPhone", isPhone)
+	_ = validate.RegisterValidation("phone", phone)
 	// 将自定义验证消息翻译成中文
-	validate.RegisterTranslation("isPhone", trans, func(ut ut.Translator) error {
-		return ut.Add("isPhone", "手机号码格式不正确", true)
+	validate.RegisterTranslation("phone", trans, func(ut ut.Translator) error {
+		return ut.Add("phone", "手机号码格式不正确", true)
 	}, func(ut ut.Translator, fe validator.FieldError) string {
-		t, _ := ut.T("isPhone", fe.Field(), fe.Field())
+		t, _ := ut.T("phone", fe.Field(), fe.Field())
 		return t
 	})
 
@@ -49,7 +49,7 @@ func BindAndValid(c *gin.Context, v interface{}) error {
 }
 
 // 判断是否为手机
-func isPhone(v validator.FieldLevel) bool {
+func phone(v validator.FieldLevel) bool {
 	str := v.Field().String()
 	reg := `^1([38][0-9]|14[57]|5[^4])\d{8}$`
 	rgx := regexp.MustCompile(reg)

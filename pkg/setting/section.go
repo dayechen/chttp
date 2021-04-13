@@ -39,9 +39,17 @@ type DatabaseSetting struct {
 	MaxOpenConns int
 }
 
+// SocketSetting socket设置
 type SocketSetting struct {
 	Active bool
 	Url    string
+}
+
+// Redis 设置
+type RedisSetting struct {
+	Host     string
+	Password string
+	DBNumber int
 }
 
 // ReadSection 读取配置文件

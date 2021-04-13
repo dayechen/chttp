@@ -2,10 +2,11 @@ package main
 
 import (
 	"cweb/global"
-	"cweb/http/model"
 	router "cweb/http/route"
 	"cweb/pkg/logger"
+	"cweb/pkg/nosql"
 	"cweb/pkg/setting"
+	"cweb/pkg/sql"
 	"fmt"
 	"net/http"
 	"time"
@@ -23,6 +24,9 @@ func init() {
 	if err := setupLogger(); err != nil {
 		fmt.Printf("初始化日志失败 %v \n", err.Error())
 	}
+	if err := setupRDBEngine(); err != nil {
+		fmt.Printf("初始化Redis失败 %v \n", err.Error())
+	}
 }
 
 func main() {
@@ -32,7 +36,6 @@ func main() {
 		Handler:      router,
 		ReadTimeout:  global.ServerSetting.ReadTimeout,
 		WriteTimeout: global.ServerSetting.WriteTimeout,
-		// MaxHeaderBytes: 1 << 20,
 	}
 	s.ListenAndServe()
 }
@@ -66,13 +69,17 @@ func setupSetting() error {
 	if err = setting.ReadSection("Socket", &global.SocketSetting); err != nil {
 		return err
 	}
+	if err = setting.ReadSection("Redis", &global.RedisSetting); err != nil {
+		return err
+	}
+
 	return nil
 }
 
 // 初始化数据库
 func setupDBEngine() error {
 	var err error
-	global.DB, err = model.NewDBEngine(global.DatabaseSetting)
+	global.DB, err = sql.NewDBEngine(global.DatabaseSetting)
 	if err != nil {
 		return err
 	}
@@ -84,6 +91,16 @@ func setupLogger() error {
 	var err error
 	path := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
 	global.Log, err = logger.NewLogger(path, global.AppSetting.LogLevel)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// 初始化redis
+func setupRDBEngine() error {
+	var err error
+	global.RDB, err = nosql.NewRDBEngine()
 	if err != nil {
 		return err
 	}
