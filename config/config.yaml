@@ -19,11 +19,11 @@ JWT:
 Database:
   DBType: mysql
   Username: root
-  Password: root
-  Host: 127.0.0.1:3306
-  DBName: treasure
+  Password: Cddy1997
+  Host: rm-wz9p9p35g365xm5wyfo.mysql.rds.aliyuncs.com
+  DBName: crm
   Charset: utf8
-  ParseTime: True
+  ParseTime: true
   MaxIdleConns: 10
   MaxOpenConns: 30
 Redis: 

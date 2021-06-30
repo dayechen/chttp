@@ -25,28 +25,25 @@ func (r *Response) ToSuccess(data interface{}) {
 	}
 	result := gin.H{
 		"success": true,
+		"code":    0,
 		"data":    data,
 	}
 	r.Ctx.JSON(http.StatusOK, result)
 }
 
 // ToError 返回错误的响应
-func (r *Response) ToError(message string) {
+func (r *Response) ToError(message string, code ...int) {
+	resultCode := 1
+	if code != nil {
+		resultCode = code[0]
+	}
 	result := gin.H{
 		"success": false,
 		"message": message,
+		"code":    resultCode,
 		"data":    gin.H{},
 	}
 	r.Ctx.JSON(http.StatusBadRequest, result)
-}
-
-// ToRedirect 重定向
-func (r *Response) ToErrorCode(code int) {
-	result := gin.H{
-		"success": false,
-		"data":    gin.H{},
-	}
-	r.Ctx.JSON(code, result)
 }
 
 // 返回分页

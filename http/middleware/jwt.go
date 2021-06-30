@@ -12,13 +12,13 @@ func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header.Get("Authorization")
 		if token == "" {
-			app.NewResponse(c).ToErrorCode(http.StatusUnauthorized)
+			app.NewResponse(c).ToError("验证失败", http.StatusUnauthorized)
 			c.Abort()
 			return
 		}
 		claims, err := app.ParseToken(token[7:])
 		if err != nil {
-			app.NewResponse(c).ToErrorCode(http.StatusUnauthorized)
+			app.NewResponse(c).ToError("验证失败", http.StatusUnauthorized)
 			c.Abort()
 			return
 		}

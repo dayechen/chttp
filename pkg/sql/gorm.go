@@ -4,7 +4,6 @@ import (
 	"cweb/global"
 	"cweb/pkg/setting"
 	"fmt"
-	"time"
 
 	"github.com/jinzhu/gorm"
 )
@@ -28,13 +27,5 @@ func NewDBEngine(databaseSetting *setting.DatabaseSetting) (*gorm.DB, error) {
 	db.SingularTable(true)
 	db.DB().SetMaxIdleConns(databaseSetting.MaxIdleConns)
 	db.DB().SetMaxOpenConns(databaseSetting.MaxOpenConns)
-	db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
 	return db, nil
-}
-
-func updateTimeStampForCreateCallback(scope *gorm.Scope) {
-	createFied, ok := scope.FieldByName("CreatedOn")
-	if ok {
-		createFied.Set(time.Now().Unix())
-	}
 }

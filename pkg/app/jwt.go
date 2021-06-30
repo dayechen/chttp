@@ -21,7 +21,7 @@ func getJWTSecret() []byte {
 }
 
 // GenerateToken 创建 token
-func GenerateToken(uid int) (string, error) {
+func GenerateToken(uid uint) (string, error) {
 
 	nowTime := time.Now()
 	// m, _ := time.ParseDuration("24h")
