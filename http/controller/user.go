@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"cweb/http/model"
 	"cweb/http/request"
-	"cweb/http/service"
 	"cweb/pkg/app"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ func Verification(c *gin.Context) {
 		response.ToError("验证码错误", 998)
 		return
 	}
-	uid, err := service.GetUserId(params.Phone)
+	uid, err := model.GetUidByPhone(params.Phone)
 	if err != nil {
 		response.ToError("查无此人")
 		return
