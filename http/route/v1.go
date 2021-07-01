@@ -8,7 +8,7 @@ import (
 )
 
 func setupV1(r *gin.RouterGroup) {
-	r.GET("/user/verification", controller.Verification)
+	r.GET("/user/verification", controller.Login)
 	r.Use(middleware.JWT())
-	r.GET("/option/menu", controller.Menu)
+	r.GET("/option/menu", controller.GetMenu)
 }

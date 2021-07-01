@@ -1,15 +1,15 @@
 package controller
 
 import (
-	"cweb/http/model"
+	"cweb/http/service"
 	"cweb/pkg/app"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Menu(c *gin.Context) {
+func GetMenu(c *gin.Context) {
 	response := app.NewResponse(c)
-	menus := model.GetMenu()
+	menus := service.GetMenu()
 	response.ToSuccess(gin.H{
 		"menus": menus,
 	})
