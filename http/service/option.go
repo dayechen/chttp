@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetMenu() interface{} {
+func GetMenu() []gin.H {
 	initMenuList := dao.GetMenuList()
 	treeList := []transform.Tree{}
 	for _, v := range *initMenuList {

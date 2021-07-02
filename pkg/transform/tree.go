@@ -7,7 +7,7 @@ import (
 type Tree struct {
 	Pid      uint // 上级菜单的id
 	ID       uint
-	Children []Tree
+	children []Tree
 	Result   map[string]interface{} // 最后生成的结果
 }
 
@@ -23,7 +23,7 @@ func buildTreeChildren(current *[]Tree, pid uint) ([]Tree, []gin.H) {
 		for _, v1 := range tree {
 			treeResultMap = append(treeResultMap, v1.Result)
 		}
-		v.Children = tree
+		v.children = tree
 		v.Result["children"] = treeResultMap
 		resultMap = append(resultMap, v.Result)
 		result = append(result, v)
