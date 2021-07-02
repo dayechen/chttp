@@ -16,7 +16,6 @@ func GetMenu() interface{} {
 			ID:  v.ID,
 			Result: gin.H{
 				"id":    v.ID,
-				"pid":   v.Pid,
 				"label": v.Label,
 				"url":   v.Url,
 			},
