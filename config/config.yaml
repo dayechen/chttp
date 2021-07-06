@@ -7,7 +7,7 @@ Socket:
   Active: false
   Url: /ws
 App:
-  LogSavePath: storage/log
+  LogSavePath: file/log
   LogFileName: app
   LogFileExt: .log
   LogLevel: debug

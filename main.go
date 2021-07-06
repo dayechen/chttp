@@ -3,10 +3,12 @@ package main
 import (
 	"cweb/global"
 	router "cweb/http/route"
+	"cweb/pkg/cache"
 	"cweb/pkg/logger"
 	"cweb/pkg/nosql"
 	"cweb/pkg/setting"
 	"cweb/pkg/sql"
+	"cweb/pkg/sql/migrate"
 	"fmt"
 	"net/http"
 	"time"
@@ -72,7 +74,8 @@ func setupSetting() error {
 	if err = setting.ReadSection("Redis", &global.RedisSetting); err != nil {
 		return err
 	}
-
+	// 设置缓存信息
+	global.Cache = cache.NewCache()
 	return nil
 }
 
@@ -83,6 +86,8 @@ func setupDBEngine() error {
 	if err != nil {
 		return err
 	}
+	// 执行迁移文件
+	migrate.Run(global.DB)
 	return nil
 }
 

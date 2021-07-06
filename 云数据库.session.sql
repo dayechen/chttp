@@ -1,1 +1,1 @@
-SELECT * FROM user
+DESC user

@@ -19,7 +19,8 @@ func NewRouter() *gin.Engine {
 	if global.SocketSetting.Active {
 		global.Socket = socket.NewSocket(global.SocketSetting.Url, router)
 	}
-	router.Use(middleware.Cors())
+	// router.Use(middleware.Cors())
+	router.Use(middleware.Role())
 	setupV1(router.Group("v1"))
 	return router
 }
