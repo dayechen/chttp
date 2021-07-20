@@ -9,8 +9,7 @@ import (
 
 // 通过gin的路由创建socket连接
 func NewSocket(path string, g *gin.Engine) *logic.Engine {
-	callback := registerCallback()
-	result := server.New(callback)
+	result := server.New(registerCallback())
 	g.GET(path, func(c *gin.Context) {
 		result.WebSocketHandle(c.Writer, c.Request)
 	})
