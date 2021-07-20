@@ -56,6 +56,6 @@ func (u *User) ReceiveMessage(ctx context.Context) error {
 			return err
 		}
 		// 发射事件
-		Broadcaster.Emit(userMsg.Event, u, userMsg.MessageID, userMsg.Params)
+		Broadcaster.emit(userMsg.Event, u, userMsg.MessageID, userMsg.Params)
 	}
 }

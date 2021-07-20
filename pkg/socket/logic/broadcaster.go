@@ -1,10 +1,5 @@
 package logic
 
-import (
-	"errors"
-	"strconv"
-)
-
 // Broadcaster 广播器用于给所有用户发送消息
 var Broadcaster = &broadcaster{
 	users:         make(map[int]*User), // 所有在线的用户
@@ -18,12 +13,12 @@ var Broadcaster = &broadcaster{
 }
 
 // 监听事件
-func (b *broadcaster) On(event string, callback func(req *Request)) {
+func (b *broadcaster) on(event string, callback func(req *Request)) {
 	b.events[event] = callback
 }
 
 // 发射事件
-func (b *broadcaster) Emit(event string, user *User, messageID int, params map[string]interface{}) {
+func (b *broadcaster) emit(event string, user *User, messageID int, params map[string]interface{}) {
 	if b.events[event] == nil {
 		println("收到未定义事件", event)
 		return
@@ -38,57 +33,6 @@ func (b *broadcaster) Emit(event string, user *User, messageID int, params map[s
 			user.MessageChannel <- ErrorMessage(content, messageID)
 		},
 	})
-}
-
-// SendMsgById 通过用户id发送消息
-func (b *broadcaster) SendMsgById(id int, event string, msg interface{}) error {
-	user := b.users[id]
-	if user == nil {
-		return errors.New("用户" + strconv.Itoa(id) + "不在线")
-	}
-	user.MessageChannel <- NormalMessage(event, msg)
-	return nil
-}
-
-// CLoseConnById 通过id关闭连接
-func (b *broadcaster) CloseConnById(id int) {
-	user := b.users[id]
-	if user != nil {
-		user.close = true
-	}
-}
-
-// 根据过滤条件关闭连接
-func (b *broadcaster) CloseConnByFilter(callback func(user *User) bool) {
-	// 游客和登录用户一起循环
-	recipient := [2]map[int]*User{
-		b.users, b.tourists,
-	}
-	for _, v := range recipient {
-		for _, v1 := range v {
-			ok := callback(v1)
-			if ok {
-				v1.close = true
-			}
-		}
-	}
-}
-
-// SendMsgByFilter 遍历所有当前在线的用户返回的不是nil就发送消息
-func (b *broadcaster) SendMsgByFilter(event string, callback func(user *User) interface{}) {
-	// 游客和登录用户一起循环
-	recipient := [2]map[int]*User{
-		b.users, b.tourists,
-	}
-	for _, v := range recipient {
-		for _, v1 := range v {
-			msg := callback(v1)
-			if msg == nil {
-				continue
-			}
-			v1.MessageChannel <- NormalMessage(event, msg)
-		}
-	}
 }
 
 // 通过id获取登录的用户

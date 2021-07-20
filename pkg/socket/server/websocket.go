@@ -34,7 +34,7 @@ func webSocketHandle(w http.ResponseWriter, req *http.Request) {
 	} else {
 		ok := callback.RepeatLogin(loginUser, user)
 		if ok {
-			logic.Broadcaster.CloseConnById(loginUser.ID) // 旧用户下线
+			logic.Broadcaster.CloseConnByID(loginUser.ID) // 旧用户下线
 			logic.Broadcaster.UserEntering(user)          // 新用户上线
 		} else {
 			// 直接关闭连接

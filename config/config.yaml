@@ -4,7 +4,7 @@ Server:
   ReadTimeout: 60
   WriteTimeout: 60
 Socket: 
-  Active: false
+  Active: true
   Url: /ws
 App:
   LogSavePath: file/log

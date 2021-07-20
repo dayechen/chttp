@@ -47,20 +47,8 @@ type Request struct {
 	Params      map[string]interface{}
 }
 
-type SendMsgByIdFunc func(id int, event string, msg interface{}) error
-type EngineOnFunc func(event string, callback func(user *Request))
-type SendMsgByFilterFunc func(event string, callback func(user *User) interface{})
-type WebSocketHandleFunc func(w http.ResponseWriter, req *http.Request)
-type CloseConnByIdFunc func(id int)
-type CloseConnByFilterFunc func(callback func(user *User) bool)
-
 type Engine struct {
-	On                EngineOnFunc
-	SendMsgById       SendMsgByIdFunc
-	SendMsgByFilter   SendMsgByFilterFunc // 遍历回调函数 如果返回的不是nil就发送数据
-	WebSocketHandle   WebSocketHandleFunc
-	CloseConnById     CloseConnByIdFunc
-	CloseConnByFilter CloseConnByFilterFunc
+	WebSocketHandle func(w http.ResponseWriter, req *http.Request)
 }
 
 type LoginData struct {
