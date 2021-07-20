@@ -1,1 +1,1 @@
-DESC user
+SELECT * FROM role

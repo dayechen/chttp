@@ -12,6 +12,6 @@ func (e *Engine) GetRoleList() *[]RoleType {
 	return e.roleList
 }
 
-func (e *Engine) SetRoleList(roleList *[]RoleType) {
-	e.roleList = roleList
+func (e *Engine) UpdateRoleList() {
+
 }
