@@ -4,7 +4,7 @@ package logic
 var Broadcaster = &broadcaster{
 	users:         make(map[int]*User), // 所有在线的用户
 	tourists:      make(map[int]*User), // 游客用户
-	events:        make(map[string]func(res *Request)),
+	events:        make(map[string]func(req *Request)),
 	nextTouristID: 0, // 下一个游客用户的id
 
 	enteringChannel: make(chan *User),

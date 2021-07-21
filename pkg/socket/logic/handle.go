@@ -1,3 +1,4 @@
+// 所有对外暴露的方法写在这里面
 package logic
 
 import (
@@ -5,8 +6,7 @@ import (
 	"strconv"
 )
 
-// 所有对外暴露的方法写在这里面
-func (e *Engine) CMD(event string, callback func(user *Request)) {
+func (e *Engine) Cmd(event string, callback func(req *Request)) {
 	Broadcaster.on(event, callback)
 }
 
@@ -21,18 +21,18 @@ func (e *Engine) SendMsgByID(id int, event string, msg interface{}) error {
 }
 
 // CLoseConnById 通过id关闭连接
-func (b *broadcaster) CloseConnByID(id int) {
-	user := b.users[id]
+func (e *Engine) CloseConnByID(id int) {
+	user := Broadcaster.users[id]
 	if user != nil {
 		user.close = true
 	}
 }
 
 // 根据过滤条件关闭连接
-func (b *broadcaster) CloseConnByFilter(callback func(user *User) bool) {
+func (e *Engine) CloseConnByFilter(callback func(user *User) bool) {
 	// 游客和登录用户一起循环
 	recipient := [2]map[int]*User{
-		b.users, b.tourists,
+		Broadcaster.users, Broadcaster.tourists,
 	}
 	for _, v := range recipient {
 		for _, v1 := range v {
@@ -45,10 +45,10 @@ func (b *broadcaster) CloseConnByFilter(callback func(user *User) bool) {
 }
 
 // SendMsgByFilter 遍历所有当前在线的用户返回的不是nil就发送消息
-func (b *broadcaster) SendMsgByFilter(event string, callback func(user *User) interface{}) {
+func (e *Engine) SendMsgByFilter(event string, callback func(user *User) interface{}) {
 	// 游客和登录用户一起循环
 	recipient := [2]map[int]*User{
-		b.users, b.tourists,
+		Broadcaster.users, Broadcaster.tourists,
 	}
 	for _, v := range recipient {
 		for _, v1 := range v {

@@ -7,7 +7,7 @@ Socket:
   Active: true
   Url: /ws
 App:
-  LogSavePath: file/log
+  LogSavePath: asset/log
   LogFileName: app
   LogFileExt: .log
   LogLevel: debug
@@ -27,6 +27,6 @@ Database:
   MaxIdleConns: 10
   MaxOpenConns: 30
 Redis: 
-  Host: 127.0.0.1:6379
-  Password: ""
+  Host: 192.168.0.16:6379
+  Password: "cddy1997"
   DBNumber: 15

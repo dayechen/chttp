@@ -16,8 +16,12 @@ func NewRouter() *gin.Engine {
 	} else {
 		router = gin.New()
 	}
+	// 注册websocket
 	if global.SocketSetting.Active {
 		global.Socket = socket.NewSocket(global.SocketSetting.Url, router)
+		router.GET(global.SocketSetting.Url, func(c *gin.Context) {
+			global.Socket.WebSocketHandle(c.Writer, c.Request)
+		})
 	}
 	// router.Use(middleware.Cors())
 	router.Use(middleware.Role())

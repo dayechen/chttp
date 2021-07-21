@@ -4,6 +4,7 @@ import (
 	"cweb/global"
 	router "cweb/http/route"
 	"cweb/pkg/cache"
+	"cweb/pkg/file"
 	"cweb/pkg/logger"
 	"cweb/pkg/nosql"
 	"cweb/pkg/setting"
@@ -94,11 +95,13 @@ func setupDBEngine() error {
 // 初始化日志
 func setupLogger() error {
 	var err error
-	path := global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
-	global.Log, err = logger.NewLogger(path, global.AppSetting.LogLevel)
+	currentPatch, _ := file.GetCurrentPath()
+	path := currentPatch + global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt
+	global.Log, err = logger.NewLogger(path, global.AppSetting.LogLevel, global.ServerSetting.RunMode)
 	if err != nil {
 		return err
 	}
+	global.Log.Infof("同步日志")
 	return nil
 }
 

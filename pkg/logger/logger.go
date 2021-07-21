@@ -1,46 +1,56 @@
 package logger
 
 import (
-	"io"
-	"os"
+	"fmt"
 
-	log "github.com/sirupsen/logrus"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
-type Engine struct{}
+var levelMap = map[string]zap.AtomicLevel{
+	"debug": zap.NewAtomicLevelAt(zap.DebugLevel),
+}
 
-func NewLogger(path string, l string) (*Engine, error) {
-	log.SetReportCaller(true)
-	str, _ := os.Getwd()
-	path = str + "/" + path
-	var logFile *os.File
-	var err error
-	logFile, err = os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModeAppend)
+func NewLogger(path string, level string, runMode string) (*zap.SugaredLogger, error) {
+	fmt.Printf("日志目录 %s ,日志等级 %s \n", path, level)
+
+	var (
+		logger *zap.Logger
+		err    error
+	)
+
+	encoderConfig := zapcore.EncoderConfig{
+		TimeKey:        "time", // 这一堆只有在json格式才有用
+		LevelKey:       "level",
+		NameKey:        "logger",
+		CallerKey:      "caller",
+		MessageKey:     "msg",
+		StacktraceKey:  "stacktrace",
+		LineEnding:     zapcore.DefaultLineEnding,
+		EncodeLevel:    zapcore.LowercaseLevelEncoder, // 小写编码器
+		EncodeTime:     zapcore.ISO8601TimeEncoder,    // ISO8601 UTC 时间格式
+		EncodeDuration: zapcore.SecondsDurationEncoder,
+		EncodeCaller:   zapcore.FullCallerEncoder, // 全路径编码器
+	}
+
+	config := zap.Config{
+		Level:         levelMap[level],
+		Encoding:      "console",
+		OutputPaths:   []string{path},
+		EncoderConfig: encoderConfig,
+	}
+
+	if runMode != "debug" {
+		logger, err = zap.NewDevelopment()
+	} else {
+		logger, err = config.Build()
+	}
+
 	if err != nil {
 		return nil, err
 	}
-	level := map[string]log.Level{
-		"debug": log.DebugLevel,
-		"info":  log.InfoLevel,
-		"warn":  log.WarnLevel,
-		"error": log.ErrorLevel,
-		"fatal": log.FatalLevel,
-		"panic": log.PanicLevel,
-	}
-	log.SetLevel(level[l])
-	log.SetOutput(io.MultiWriter(logFile))
-	return &Engine{}, nil
-}
 
-func (l *Engine) Debug(args ...interface{}) {
-	log.Debug(args...)
-}
-func (l *Engine) Info(args ...interface{}) {
-	log.Info(args...)
-}
-func (l *Engine) Warn(args ...interface{}) {
-	log.Warn(args...)
-}
-func (l *Engine) Error(args ...interface{}) {
-	log.Error(args...)
+	defer logger.Sync()
+
+	return logger.Sugar(), nil
 }

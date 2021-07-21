@@ -1,0 +1,2 @@
+2021-07-21T13:56:44.114+0800	info	/usr/local/go/src/runtime/asm_amd64.s:1371	异步日志
+2021-07-21T13:57:08.472+0800	info	/Users/chending/home/code/golang/cweb/main.go:104	同步日志
