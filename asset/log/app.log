@@ -1,2 +1,6 @@
 2021-07-21T13:56:44.114+0800	info	/usr/local/go/src/runtime/asm_amd64.s:1371	异步日志
 2021-07-21T13:57:08.472+0800	info	/Users/chending/home/code/golang/cweb/main.go:104	同步日志
+2021-07-21T15:12:21.694+0800	info	/Users/chending/home/code/golang/cweb/main.go:104	同步日志
+{"level":"info","time":"2021-07-21T15:40:41.405+0800","linenum":"/Users/chending/home/code/golang/cweb/main.go:104","msg":"同步日志","serviceName":"serviceName"}
+2021-07-21T15:41:34.319+0800	info	/Users/chending/home/code/golang/cweb/main.go:104	同步日志	{"serviceName": "serviceName"}
+2021-07-21T15:42:33.057+0800	info	/Users/chending/home/code/golang/cweb/main.go:104	同步日志

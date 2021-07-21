@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (e *Engine) Cmd(event string, callback func(req *Request)) {
+func (e *Engine) Event(event string, callback func(req *Request)) {
 	Broadcaster.on(event, callback)
 }
 
