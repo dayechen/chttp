@@ -27,6 +27,6 @@ Database:
   MaxIdleConns: 10
   MaxOpenConns: 30
 Redis: 
-  Host: 192.168.0.16:6379
+  Host: 192.168.0.20:6379
   Password: "cddy1997"
   DBNumber: 15

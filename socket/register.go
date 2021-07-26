@@ -1,24 +1,20 @@
 package socket
 
 import (
-	"cweb/pkg/socket/logic"
-	"cweb/pkg/socket/server"
+	"cweb/pkg/socket/wslogic"
 	"strconv"
 )
 
 // 注册socket的回调函数
-func registerCallback() *server.Callback {
-	return &server.Callback{
-		Verification: func(token string) *logic.LoginData {
+func registerCallback() *wslogic.Callback {
+	return &wslogic.Callback{
+		Verification: func(token string) (int, bool) {
 			id, _ := strconv.Atoi(token)
-			return &logic.LoginData{
-				ID: id,
-				Ok: true,
-			}
+			return id, true
 		},
-		Leaving: func(user *logic.User) {
+		Leaving: func(user *wslogic.User) {
 		},
-		RepeatLogin: func(oldUser, newUser *logic.User) bool {
+		RepeatLogin: func(oldUser, newUser *wslogic.User) bool {
 			return true
 		},
 	}

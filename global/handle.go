@@ -2,7 +2,7 @@ package global
 
 import (
 	"cweb/pkg/cache"
-	"cweb/pkg/socket/logic"
+	"cweb/pkg/socket/wslogic"
 
 	"github.com/go-redis/redis"
 	"github.com/jinzhu/gorm"
@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	Socket *logic.Engine      // socket
+	Socket *wslogic.Engine    // socket
 	DB     *gorm.DB           // 数据库
 	RDB    *redis.Client      // redis
 	Log    *zap.SugaredLogger // 日志

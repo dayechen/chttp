@@ -1,5 +1,5 @@
 // 所有对外暴露的方法写在这里面
-package logic
+package wslogic
 
 import (
 	"errors"
@@ -59,4 +59,11 @@ func (e *Engine) SendMsgByFilter(event string, callback func(user *User) interfa
 			v1.MessageChannel <- NormalMessage(event, msg)
 		}
 	}
+}
+
+// 启动的登录
+type Callback struct {
+	Verification func(token string) (int, bool)          // 用户登录时调用 返回用户ID 游客返回0
+	Leaving      func(user *User)                        // 用户离开时调用 传递用户id
+	RepeatLogin  func(oldUser *User, newUser *User) bool // 重复登录时调用 返回true就让登录的用户被挤下来
 }

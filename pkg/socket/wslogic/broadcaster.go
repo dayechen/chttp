@@ -1,4 +1,4 @@
-package logic
+package wslogic
 
 // Broadcaster 广播器用于给所有用户发送消息
 var Broadcaster = &broadcaster{
@@ -18,7 +18,7 @@ func (b *broadcaster) on(event string, callback func(req *Request)) {
 }
 
 // 发射事件
-func (b *broadcaster) emit(event string, user *User, messageID int, params map[string]interface{}) {
+func (b *broadcaster) emit(event string, user *User, messageID int, params interface{}) {
 	if b.events[event] == nil {
 		println("收到未定义事件", event)
 		return

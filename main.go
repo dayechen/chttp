@@ -101,7 +101,6 @@ func setupLogger() error {
 	if err != nil {
 		return err
 	}
-	global.Log.Infof("同步日志")
 	return nil
 }
 

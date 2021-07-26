@@ -8,14 +8,6 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-// var levelMap = map[string]zap.AtomicLevel{
-// 	"debug": zap.NewAtomicLevelAt(zap.DebugLevel),
-// 	"info":  zap.NewAtomicLevelAt(zap.InfoLevel),
-// 	"warn":  zap.NewAtomicLevelAt(zap.WarnLevel),
-// 	"error": zap.NewAtomicLevelAt(zap.ErrorLevel),
-// 	"fatal": zap.NewAtomicLevelAt(zap.FatalLevel),
-// }
-
 func NewLogger(path string, level string, runMode string) (*zap.SugaredLogger, error) {
 
 	levelMap := map[string]zapcore.Level{
@@ -53,9 +45,22 @@ func NewLogger(path string, level string, runMode string) (*zap.SugaredLogger, e
 	atomicLevel := zap.NewAtomicLevel()
 	atomicLevel.SetLevel(levelMap[level])
 
+	var multiWriteSyncerConfig []zapcore.WriteSyncer
+
+	// 是否在控制台打印
+	if runMode == "debug" {
+		multiWriteSyncerConfig = []zapcore.WriteSyncer{
+			zapcore.AddSync(os.Stdout), zapcore.AddSync(&hook),
+		}
+	} else {
+		multiWriteSyncerConfig = []zapcore.WriteSyncer{
+			zapcore.AddSync(&hook),
+		}
+	}
+
 	core := zapcore.NewCore(
-		zapcore.NewConsoleEncoder(encoderConfig),                                        // 编码器配置
-		zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(&hook)), // 打印到控制台和文件
+		zapcore.NewConsoleEncoder(encoderConfig),               // 编码器配置 还可选择json格式
+		zapcore.NewMultiWriteSyncer(multiWriteSyncerConfig...), // 打印到控制台和文件
 		atomicLevel, // 日志级别
 	)
 
@@ -70,46 +75,3 @@ func NewLogger(path string, level string, runMode string) (*zap.SugaredLogger, e
 
 	return logger.Sugar(), nil
 }
-
-// func NewLogger1(path string, level string, runMode string) (*zap.SugaredLogger, error) {
-
-// 	var (
-// 		logger *zap.Logger
-// 		err    error
-// 	)
-
-// 	encoderConfig := zapcore.EncoderConfig{
-// 		TimeKey:        "time", // 这一堆只有在json格式才有用
-// 		LevelKey:       "level",
-// 		NameKey:        "logger",
-// 		CallerKey:      "caller",
-// 		MessageKey:     "msg",
-// 		StacktraceKey:  "stacktrace",
-// 		LineEnding:     zapcore.DefaultLineEnding,
-// 		EncodeLevel:    zapcore.LowercaseLevelEncoder, // 小写编码器
-// 		EncodeTime:     zapcore.ISO8601TimeEncoder,    // ISO8601 UTC 时间格式
-// 		EncodeDuration: zapcore.SecondsDurationEncoder,
-// 		EncodeCaller:   zapcore.FullCallerEncoder, // 全路径编码器
-// 	}
-
-// 	config := zap.Config{
-// 		Level:         levelMap[level],
-// 		Encoding:      "console",
-// 		OutputPaths:   []string{path},
-// 		EncoderConfig: encoderConfig,
-// 	}
-
-// 	if runMode != "debug" {
-// 		logger, err = zap.NewDevelopment()
-// 	} else {
-// 		logger, err = config.Build()
-// 	}
-
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	defer logger.Sync()
-
-// 	return logger.Sugar(), nil
-// }

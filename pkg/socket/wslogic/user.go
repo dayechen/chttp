@@ -1,4 +1,4 @@
-package logic
+package wslogic
 
 import (
 	"context"
@@ -9,12 +9,11 @@ import (
 )
 
 // NewUser 返回用户实例
-func NewUser(conn *websocket.Conn, ID int, Info map[string]interface{}) *User {
+func NewUser(conn *websocket.Conn, ID int) *User {
 	return &User{
 		conn:           conn,
 		ID:             ID,
 		close:          false,
-		Info:           Info,
 		MessageChannel: make(chan *Message),
 	}
 }
@@ -31,23 +30,23 @@ func (u *User) CloseMessageChannel() {
 	close(u.MessageChannel)
 }
 
-type UserMsg struct {
-	Event     string                 `json:"event"`
-	MessageID int                    `json:"messageID"`
-	Params    map[string]interface{} `json:"params"`
+type UserMessage struct {
+	Event     string      `json:"event"`
+	MessageID int         `json:"messageID"`
+	Params    interface{} `json:"params"`
 }
 
 // ReceiveMessage 接收用户消息
 func (u *User) ReceiveMessage(ctx context.Context) error {
 	var (
-		err     error
-		userMsg UserMsg
+		err         error
+		UserMessage UserMessage
 	)
 	for {
 		if u.close {
 			return nil
 		}
-		err = wsjson.Read(ctx, u.conn, &userMsg)
+		err = wsjson.Read(ctx, u.conn, &UserMessage)
 		if err != nil {
 			var closeErr websocket.CloseError
 			if errors.As(err, &closeErr) {
@@ -56,6 +55,6 @@ func (u *User) ReceiveMessage(ctx context.Context) error {
 			return err
 		}
 		// 发射事件
-		Broadcaster.emit(userMsg.Event, u, userMsg.MessageID, userMsg.Params)
+		Broadcaster.emit(UserMessage.Event, u, UserMessage.MessageID, UserMessage.Params)
 	}
 }
